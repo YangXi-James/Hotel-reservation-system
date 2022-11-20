@@ -1,0 +1,4 @@
+POST http://127.0.0.1:8000/userList
+Content-Type: application/x-www-form-urlencoded
+
+pageNo=2&pageSize=10
