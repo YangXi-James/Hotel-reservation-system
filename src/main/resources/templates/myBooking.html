@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的订单</title>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--header starts-->
+<div class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img id="1" src="/images/logo.png"/></a> <!--修改图片 -->
+                <div class="clearfix"></div>
+            </div>
+            <span class="menu"> </span>
+            <div class="m-clear"></div>
+            <div class="top-menu">
+                <ul>
+                    <li><a href="toPage?url=/index">首页</a></li>
+                    <li class="active"><a href=""toPage?url=/myBooking"">订单信息</a></li>
+                    <li><a  href="contact.html">联系客服</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                <script>
+                    $("span.menu").click(function(){
+                        $(".top-menu ul").slideToggle(200);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="contact-bg2">
+    <div class="container">
+        <div class="booking">
+            <h3>订单信息</h3>
+            <div class="col-md-8 booking-form">
+                <form>
+                    <div class="main_bg">
+                        <div class="container">
+                            <div class="main" style="margin-left: -20px">
+                                <!--
+                                <ul class="service_list">
+                                    <li>
+                                        <div class="ser_img">
+                                            <img src="/images/jd01.png" alt="" />
+                                        </div>
+                                        <a href="toPage?url=/review.html" class="bookingPreOrder">评论</a>
+                                    </li>
+                                </ul>
+                                -->
+                                <ul class="service_list" id="test1">
+                                </ul>
+                                <ul class="service_list top" id="test2">
+                                </ul>
+                                <ul class="service_list" id="test3">
+                                </ul>
+                                <ul class="service_list top" id="test4">
+                                </ul>
+                                <ul class="service_list" id="test5">
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>仅显示最近20个订单</h4>
+                    <h5>退款规则</h5>
+                    <h6>根据酒店政策，支付订单前可免费取消，支付订单后，如未入住，酒店将扣除全部房费，申请退房将扣除部分房费（包含手续费）。</h6>
+                    <h5>预订说明</h5>
+                    <h6>订单需等酒店或供应商确认后才生效，订单确认结果以个人订单管理信息为准；请在订单生效后再至酒店前台办理入住。</h6>
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+</div>
+<!---->
+<div class="fotter">
+    <div class="container">
+        <h3>143个城市位于世界各地的酒店</h3>
+        <h4>"热情好客，质量好，地理位置好，我们只为您提供最好的酒店"</h4>
+        <i class="man"></i>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    $(function() {
+
+        let user_id = [[${user_id}]];
+        if(user_id==null){
+            alert("登录错误");
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"/orderList",
+            data:{
+                "user_id":user_id,
+            },
+            dataType:"json",
+            success:function (data) {
+                if (data.length == 0){
+                    alert("你害妹有订单！");
+                } else{
+                    for (let i=0;i<data.length;i++) {
+                        let n = data.length-i;
+                        if(i==20){
+                            break
+                        }
+                        html =
+                            '<li>'+
+                            '<p id="order_id'+'i">'+'宁的第'+n+'个订单'+'</p>'+
+                            '<div class="ser_img">'+
+                            '<img style="height: 200px" id="pict" '+'src="'+data[i].roomphoto_url+'" alt=""/>'+
+                            '</div>'+
+                            '<div style="width:100px;float:left">'+
+                            '<form method="get" action="/Detail">'+
+                            '<input style="display: none" name="order_id" type="text" value="'+data[i].order_id+'">'+
+                            '<input style="margin-top: 0px" type="submit" value="详情">'+
+                            '</form>'+
+                            '</div>'+
+                            '<div style="width:100px;float:right;">'+
+                            '<form method="get" action="/review" >'+
+                            '<input style="display: none" name="order_id" type="text" value="'+data[i].order_id+'">'+
+                            '<input style="margin-top: 0px;margin-left: 25px"" type="submit" value="评论">'+
+                            '</form>'+
+                            '</div>'+
+                            '</li>'+
+                            '<div class="clear"></div>';
+                        if (i<4) {
+                            $("#test1").append(html);
+                        }else if (i<8 & i>3) {
+                            $("#test2").append(html);
+                        }else if (i<12 & i>7){
+                            $("#test3").append(html);
+                        }else if (i<16 & i>11){
+                            $("#test4").append(html);
+                        }else if (i<20 & i>15){
+                            $("#test5").append(html);
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+

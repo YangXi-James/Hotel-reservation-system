@@ -1,0 +1,52 @@
+
+spring:
+  # 配置数据源
+  datasource:
+    url: jdbc:mysql://localhost:3306/scu_java_21?serverTimezone=UTC&useAffectedRows=true&useSSL=false
+    username: root
+    password: 1224
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: SELECT 1
+
+  mail:
+    host: smtp.163.com
+    username: yang1053902196@163.com
+    password: GLMWNZSQBNQRBSFL
+    port: 465
+    properties:
+      mail:
+        # SMTP服务
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+  thymeleaf:
+    cache: false
+
+
+
+  # 设置全局日期格式,如果设置这个格式,则代码中@DateTimeFormat(pattern = "dd/MM/yyyy") 无效!!
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
+server:
+  port: 8000
+  servlet:
+    encoding:
+      charset: utf-8
+
+mybatis:
+  mapper-locations: "classpath:/mybatis/mapper/*.xml,classpath:/mybatis/mapper/extends/*.xml"
+
+# 日志文件 在这个包当中输出的文件都会一日志文件的形式记载
+logging:
+  level:
+    com.example.springboot.mapper: debug

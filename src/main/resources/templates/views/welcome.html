@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <title>酒店后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all" th:href="@{/layuiadmin/layui/css/layui.css}" >
+    <link rel="stylesheet"  href="../../../layuiadmin/style/admin.css" media="all" th:href="@{/layuiadmin/style/admin.css}" >
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" th:src="@{/js/date.js}" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header" >
+                    用户数
+                    <span class="layui-badge layui-bg-blue layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font" id="userCount">9,999,666</p>
+                    <!--todo：ajax-->
+                    <script>
+                        $(document).ready(function(){
+                                $.ajax({url:"/getUserCount",async:true,success:function(result){
+                                        $("#userCount").html(result);
+                                    }});
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    订单数
+                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font" id="orderCount"> 33,555</p>
+                    <script>
+                        $(document).ready(function(){
+                            $.ajax({url:"/getOrderCount",async:true,success:function(result){
+                                    $("#orderCount").html(result);
+                                }});
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    合作伙伴数
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">酒店</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+
+                    <p class="layuiadmin-big-font" id="hotelCount">999,666</p>
+                    <script>
+                        $(document).ready(function(){
+                            $.ajax({url:"/getHotelCount",async:true,success:function(result){
+                                    $("#hotelCount").html(result);
+                                }});
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    房间数目
+                    <span class="layui-badge layui-bg-orange layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+
+                    <p class="layuiadmin-big-font" id="roomCount">66,666</p>
+                    <script>
+                        $(document).ready(function(){
+                            $.ajax({url:"/getRoomCount",async:true,success:function(result){
+                                    $("#roomCount").html(result);
+                                }});
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    最新订单
+                </div>
+
+                <div class="layui-card-body">
+                    <ul class="layui-timeline">
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" id="orderOneDay" >8月18日</h3>
+                                <p id="orderOneBody">
+                                    <i class="layui-icon"></i>
+                                </p>
+                                <script>
+                                    $(document).ready(function(){
+                                        var json = {
+                                            jobLevel:'1'
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "../getLatestOrder",
+
+                                            success: function(resp){
+                                                var orderID= "下单日期：";
+                                                var date =new Date(resp[1].time);
+                                                orderID=dateFtt("yyyy-MM-dd hh:mm:ss",date);
+                                                var dateTwo=new Date(resp[1].orderTime);
+                                                /* orderID += date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+"-"+date.getHours();*/
+                                                var orderMain= "";
+                                                orderMain += "订单金额:"+resp[1].totalPrice+"&nbsp&nbsp&nbsp预定日期:"+dateFtt("yyyy-MM-dd hh:mm:ss",dateTwo)+"&nbsp&nbsp&nbsp预定天数:"+resp[1].datingTime
+                                                $("#orderOneDay").html(orderID);
+
+                                                $("#orderOneBody").html(orderMain);
+                                            },
+                                            error:function(resp){
+                                                $.messager.alert('出错了');
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" id="orderTwoDay" >8月18日</h3>
+                                <p id="orderTwoBody">
+                                    <i class="layui-icon"></i>
+                                </p>
+                                <script>
+                                    $(document).ready(function(){
+                                        var json = {
+                                            jobLevel:'1'
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "../getLatestOrder",
+
+                                            success: function(resp){
+                                                var orderID= "下单日期：";
+                                                var date =new Date(resp[1].time);
+                                                orderID=dateFtt("yyyy-MM-dd hh:mm:ss",date);
+                                                var dateTwo=new Date(resp[1].orderTime);
+                                                /* orderID += date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+"-"+date.getHours();*/
+                                                var orderMain= "";
+                                                orderMain += "订单金额:"+resp[1].totalPrice+"&nbsp&nbsp&nbsp预定日期:"+dateFtt("yyyy-MM-dd hh:mm:ss",dateTwo)+"&nbsp&nbsp&nbsp预定天数:"+resp[1].datingTime
+                                                $("#orderTwoDay").html(orderID);
+
+                                                $("#orderTwoBody").html(orderMain);
+                                            },
+                                            error:function(resp){
+                                                $.messager.alert('出错了');
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" id="orderThreeDay" >8月18日</h3>
+                                <p id="orderThreeBody">
+                                    <i class="layui-icon"></i>
+                                </p>
+                                <script>
+                                    $(document).ready(function(){
+                                        var json = {
+                                            jobLevel:'1'
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "../getLatestOrder",
+
+                                            success: function(resp){
+                                                var orderID= "下单日期：";
+                                                var date =new Date(resp[2].time);
+                                                orderID=dateFtt("yyyy-MM-dd hh:mm:ss",date);
+                                                var dateTwo=new Date(resp[2].orderTime);
+                                                /* orderID += date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+"-"+date.getHours();*/
+                                                var orderMain= "";
+                                                orderMain += "订单金额:"+resp[2].totalPrice+"&nbsp&nbsp&nbsp预定日期:"+dateFtt("yyyy-MM-dd hh:mm:ss",dateTwo)+"&nbsp&nbsp&nbsp预定天数:"+resp[2].datingTime
+                                                $("#orderThreeDay").html(orderID);
+                                                $("#orderThreeBody").html(orderMain);
+                                            },
+                                            error:function(resp){
+                                                $.messager.alert('出错了');
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" id="four1" >8月18日</h3>
+                                <p id="four2">
+                                    <i class="layui-icon"></i>
+                                </p>
+                                <script>
+                                    $(document).ready(function(){
+                                        var json = {
+                                            jobLevel:'1'
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "../getLatestOrder",
+
+                                            success: function(resp){
+                                                var orderID= "下单日期：";
+                                                var date =new Date(resp[3].time);
+                                                orderID=dateFtt("yyyy-MM-dd hh:mm:ss",date);
+                                                var dateTwo=new Date(resp[3].orderTime);
+                                                /* orderID += date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+"-"+date.getHours();*/
+                                                var orderMain= "";
+                                                orderMain += "订单金额:"+resp[3].totalPrice+"&nbsp&nbsp&nbsp预定日期:"+dateFtt("yyyy-MM-dd hh:mm:ss",dateTwo)+"&nbsp&nbsp&nbsp预定天数:"+resp[3].datingTime
+                                                $("#four1").html(orderID);
+                                                $("#four2").html(orderMain);
+                                            },
+                                            error:function(resp){
+                                                $.messager.alert('出错了');
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title" id="five1" >8月18日</h3>
+                                <p id="five2">
+                                    <i class="layui-icon"></i>
+                                </p>
+                                <script>
+                                    $(document).ready(function(){
+                                        var json = {
+                                            jobLevel:'1'
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "../getLatestOrder",
+
+                                            success: function(resp){
+                                                var orderID= "下单日期：";
+                                                var date =new Date(resp[4].time);
+                                                orderID=dateFtt("yyyy-MM-dd hh:mm:ss",date);
+                                                var dateTwo=new Date(resp[4].orderTime);
+                                                /* orderID += date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+"-"+date.getHours();*/
+                                                var orderMain= "";
+                                                orderMain += "订单金额:"+resp[4].totalPrice+"&nbsp&nbsp&nbsp预定日期:"+dateFtt("yyyy-MM-dd hh:mm:ss",dateTwo)+"&nbsp&nbsp&nbsp预定天数:"+resp[4].datingTime
+                                                $("#five1").html(orderID);
+                                                $("#five2").html(orderMain);
+                                            },
+                                            error:function(resp){
+                                                $.messager.alert('出错了');
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<script src="../../../layuiadmin/layui/layui.js" th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' ,//主入口模块
+        timeago: 'timeago'
+    }).use(['index', 'sample','timeago'],function ()
+    {
+        var $ = layui.jquery;
+        var timeago = layui.timeago;
+        timeago.render($('.timeago'));
+    });
+</script>
+</body>
+</html>

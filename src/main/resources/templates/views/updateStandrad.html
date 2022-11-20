@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <title>编辑房型信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all" th:href="@{/layuiadmin/layui/css/layui.css}" >
+    <link rel="stylesheet"  href="../../../layuiadmin/style/admin.css" media="all" th:href="@{/layuiadmin/style/admin.css}" >
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form1">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" disabled>房型id</label>
+                    <div class="layui-input-block">
+                        <input  name="standardId" th:value="${standrad.standardId}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">房间面积</label>
+                    <div class="layui-input-block">
+                        <input  name="area" th:value="${standrad.area}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">房间数目</label>
+                    <div class="layui-input-block">
+                        <input  name="roomNumber" th:value="${standrad.roomNumber}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">楼层</label>
+                    <div class="layui-input-block">
+                        <input  name="storey" th:value="${standrad.storey}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">热水：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="weaherHotwater" lay-skin="switch" lay-text="有|无">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">WIFI：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="weatherWifi" lay-skin="switch" lay-text="有|无">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">能否取消：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="weaherCancel" lay-skin="switch" lay-text="能|不能哦">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">早餐类型</label>
+                    <div class="layui-input-block">
+                        <select name="breakfast" lay-filter="form1">
+                            <option value=""></option>
+                            <option value="0">无早餐</option>
+                            <option value="1" selected="">单人早餐</option>
+                            <option value="2">双人早餐</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">价格</label>
+                    <div class="layui-input-block">
+                        <textarea  name="equipment"   placeholder="请输入内容" class="layui-textarea" >[[ ${standrad.price} ]]</textarea>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">设备</label>
+                    <div class="layui-input-block">
+                        <textarea  name="equipment"   placeholder="请输入内容" class="layui-textarea" >[[ ${standrad.equipment} ]]</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-layout-admin">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0;">
+                            <button class="layui-btn" lay-submit="" lay-filter="layer_btn_submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../layuiadmin/layui/layui.js" th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    layui.config({
+        base: [('"'+@{/layuiadmin/}+'"')]
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+        form.render(null, 'form1');
+        form.val("form1", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+            "weaherHotwater": [[     ${standrad.weaherHotwater}     ]],
+            "weatherWifi":[[         ${standrad.weatherWifi}          ]],
+             "breakfast": [[     ${standrad.breakfast}        ]]
+        });
+
+
+        /* 自定义验证规则 */
+        form.verify({
+            name: function(value){
+                if(value.length < 1){
+                    return '标题至少得5个字符啊';
+                }
+            },
+
+        });
+
+        /* 监听提交 */
+        form.on('submit(layer_btn_submit)', function(data){
+            if(data.field.weaherHotwater=="on" )
+            {
+                data.field.weaherHotwater="true";
+            }else
+            {
+                data.field.weaherHotwater="false";
+            }
+            if(data.field.weatherWifi=="on" )
+            {
+                data.field.weatherWifi="true";
+            }else
+            {
+                data.field.weatherWifi="false";
+            }
+            if(data.field.weaherCancel=="on" )
+            {
+                data.field.weaherCancel="true";
+            }else
+            {
+                data.field.weaherCancel="false";
+            }
+
+            $.ajax({
+                type: "POST",
+                contentType:"application/json",
+                url: "/submintUpdatedStandrad",
+                data: JSON.stringify(data.field),
+                success: function(msg){
+                    if(msg["success"]){
+                        var layer = parent.layer;
+                        layer.msg("操作成功 ",{time:700},function () {
+                            layer.closeAll();
+                            // 重新加载上级页面的路径，相当于刷新
+                            parent.location.reload();
+                        });
+                    }
+                },
+                dataType:"json"
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

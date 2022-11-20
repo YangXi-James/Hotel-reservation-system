@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <title>显示酒店详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../" media="all" th:href="@{/layuiadmin/layui/css/layui.css}" >
+    <link rel="stylesheet"  href="../../../layuiadmin/style/admin.css" media="all" th:href="@{/layuiadmin/style/admin.css}" >
+    <script type="text/javascript" src="/path/PCASClass.js" th:href="@{/PCASClass.js}"></script>
+
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form1">
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">酒店id</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="hotelId"  autocomplete="off" class="layui-input" th:value="${hotel.hotelId}">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">酒店名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="hotelName" autocomplete="off" class="layui-input" th:value="${hotel.hotelName}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">酒店星级</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="level"  autocomplete="off" class="layui-input" th:value="${hotel.level}">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">酒店评分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="grade" autocomplete="off" class="layui-input" th:value="${hotel.grade}">
+                        </div>
+                    </div>
+                </div>
+                <!--&lt;!&ndash;todo:需要补充区域联动机制&ndash;&gt;
+                <select lay-filter="province" name="province" style="width:30px;"></select>
+                <select name="city" lay-filter="city" style="width:30px;"></select>
+                <select name="area" lay-filter="area" style="width:30px;"></select>-->
+                <div class="layui-form-item" id="area-picker">
+                    <div class="layui-form-label">酒店地址</div>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <select name="province" class="province-selector" th:data-value="${hotel.province.provinceName}" lay-filter="province-1" >
+                            <option value="" id="province">--选择省--</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <select name="city" class="city-selector" th:data-value="${hotel.city.cityName}" lay-filter="city-1">
+                            <option value="">--选择市--</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <select name="distinction" class="county-selector" th:data-value="${hotel.distinction.distinctName}" lay-filter="county-1">
+                            <option value="">--选择区--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="telephone" lay-verify="tel" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${hotel.telephone}" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address"  autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${hotel.address}" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="description"  autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${hotel.description}" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图片链接</label>
+                    <div class="layui-input-block">
+                        <input type="text"  lay-verify="password"  name="photoAddress"   autocomplete="off" placeholder="请输入标题" class="layui-input"  th:value="${hotel.photoAddress}" id="imageAdd">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" id="changeImg" >更换图片</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图片</label>
+                    <div class="layui-input-block">
+                        <img th:src="${hotel.photoAddress}" id="imgAdd" />
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-layout-admin">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0;">
+                            <button class="layui-btn" lay-submit="" lay-filter="layer_btn_submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../layuiadmin/layui/layui.js" th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+
+    layui.config({
+        base: [('"'+@{/layuiadmin/}+'"')]
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate','layer','layarea'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+           layui.layarea.render({
+            elem: '#area-picker',
+            change: function (res) {
+                //选择结果
+                console.log(res);
+            }
+        });
+        form.render(null, 'form1');
+        $(document).on('click','#changeImg',function(){
+          /*  alert("hello");*/
+          var newAdd = $('#imageAdd').val();
+       /*   $('#imgAdd').attr("src",newAdd);*/
+
+            $.ajax({
+                url : newAdd,
+                async : false,
+                type : 'HEAD',
+                error : function() {
+                    newAdd　= "https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=404&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=2453368590,3077318655&os=1797233778,2329716599&simid=0,0&pn=0&rn=1&di=84700&ln=1730&fr=&fmq=1595663484317_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&hs=2&objurl=http%3A%2F%2Fsydiaocha.cn%2Fimg.php%3Fpic2.zhimg.com%2F50%2Fv2-236896c3ef7a9684d5badce4bf5a5f60_bh.jpg&rpstart=0&rpnum=0&adpicid=0&force=undefined";
+                    $('#imgAdd').attr("src",newAdd);
+                }, success : function() {
+                    alert("开始加载");
+                    $('#imgAdd').attr("src",newAdd);
+                }
+            });
+
+
+        });
+        /* 监听提交 */
+        form.on('submit(layer_btn_submit)', function(data){
+            $.ajax({
+                type: "POST",
+                contentType:"application/json",
+                url: "/submintUpdatedHotel",
+                data: JSON.stringify(data.field),
+                success: function(msg){
+                    if(msg["success"]){
+                        var layer = parent.layer;
+                        layer.msg("操作成功 ",{time:700},function () {
+                            layer.closeAll();
+                            // 重新加载上级页面的路径，相当于刷新
+                            parent.location.reload();
+                        });
+                    }
+                },
+                dataType:"json"
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

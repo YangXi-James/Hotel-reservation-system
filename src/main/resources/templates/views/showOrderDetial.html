@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <title>显示订单详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all" th:href="@{/layuiadmin/layui/css/layui.css}" >
+    <link rel="stylesheet"  href="../../../layuiadmin/style/admin.css" media="all" th:href="@{/layuiadmin/style/admin.css}" >
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form1">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">订单id</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="totalPrice" lay-verify="totalPrice" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.orderId}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">订单时间</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="time" lay-verify="time" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.time}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预定时间</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="order_time" lay-verify="order_time" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.orderTime}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预定天数</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="dating_time" lay-verify="dating_time" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.datingTime}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户id</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="uId" lay-verify="uId" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.user.id}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户昵称</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="nickname" lay-verify="nickname" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.user.nickname}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户邮箱</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.user.email}" disabled>
+                    </div>
+                </div>
+                <!--房型信息待补充-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">房型id</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="sId" lay-verify="sId" autocomplete="off" placeholder="请输入标题" class="layui-input" th:value="${order.standard.standardId}" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" id="showStandrad" >点击查看具体房型信息</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">酒店id</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" name="hotelID"  autocomplete="off" placeholder="请输入就酒店id" class="layui-input" th:value="${order.standard.hotelId}"  >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" id="showHotel" >点击查看具体酒店信息</button>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-layout-admin">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0;">
+                            <button class="layui-btn" lay-submit="" lay-filter="layer_btn_submit">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../layuiadmin/layui/layui.js" th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    layui.config({
+        base: [('"'+@{/layuiadmin/}+'"')]
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+        form.render(null, 'form1');
+        $(document).on('click','#showHotel',function(){
+            var hotel =[[           ${order.standard.hotelId}             ]]
+
+            layer.open({
+                title:"酒店详细信息",
+                type: 2,
+                content: '/showHotelDetial?id='+hotel,
+                area: ['600px', '400px'],
+                maxmin: true,
+                success: function(layero, index){
+                    layer.full(index);
+                }
+            });
+        });
+        form.render(null, 'form1');
+        $(document).on('click','#showStandrad',function(){
+            var standard =[[            ${order.standard.standardId}             ]]
+            layer.open({
+                title:"房型详细信息",
+                type: 2,
+                content:'/updateStandradQuest?id='+standard ,
+                area: ['600px', '400px'],
+                maxmin: true,
+                success: function(layero, index){
+                    layer.full(index);
+                }
+            });
+        });
+
+        /* 监听提交 */
+        form.on('submit(layer_btn_submit)', function(data){
+            var layer = parent.layer;
+            layer.closeAll();
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

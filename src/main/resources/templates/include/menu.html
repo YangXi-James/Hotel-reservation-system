@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<!-- 侧边菜单 -->
+<div class="layui-side layui-side-menu" th:fragment="menu">
+    <div class="layui-side-scroll">
+        <div class="layui-logo" lay-href="home/console.html">
+            <span>酒店后台管理系统</span>
+        </div>
+        <!--  layui-nav-itemed 控制菜单是否展开  layui-this 控制子菜单激活是否激活-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+            <li data-name="home" class="layui-nav-item ">
+                <a href="javascript:;" lay-tips="用户管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <cite>用户管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="http://www.qq.com"  th:lay-href="@{/page/UserList}">用户列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="http://www.qq.com"  th:lay-href="@{/page/adminList}">管理员列表</a>
+
+
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="http://www.qq.com"  th:lay-href="@{/page/blockedUserList}">冻结用户列表</a>
+                    </dd>
+                </dl>
+            </li>
+            <li data-name="home" class="layui-nav-item ">
+                <a href="javascript:;" lay-tips="订单管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <cite>订单管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="http://www.qq.com" th:lay-href="@{/page/orderList}">订单列表</a>
+                    </dd>
+                </dl>
+
+            </li>
+            <li data-name="home" class="layui-nav-item ">
+                <a href="javascript:;" lay-tips="酒店信息管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <cite>酒店信息管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="http://www.qq.com" th:lay-href="@{/page/hotelList}">酒店列表</a>
+
+
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+</html>

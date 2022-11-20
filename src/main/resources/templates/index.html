@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/index.js" type="text/javascript"></script>
+    <link href="/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="/css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<!--header starts-->
+<div class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="logo">
+                <a href=""><img src="/images/logo.png"/></a> <!--修改图片 -->
+                <div class="clearfix"></div>
+            </div>
+            <span class="menu"> </span>
+            <div class="m-clear"></div>
+            <div class="top-menu">
+                <ul>
+                    <li class="active"><a href="toPage?url=/index">首页</a></li>
+                    <li><a id="login" href="toPage?url=/loginForm">登录</a></li>
+                    <li><a id="register" href="toPage?url=/RegisterForm">注册</a></li>
+                    <li><a href="toPage?url=/myinformation">我</a></li>
+                    <li><a id="order" href="/Mybooking">订单</a></li>
+                    <li><a id="cancellation" href="javascript:void(0)" onclick="cancellogin()">注销</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                <script>
+                    $("span.menu").click(function () {
+                        $(".top-menu ul").slideToggle(200);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="main_bg">
+    <div class="container">
+        <div class="main">
+            <table class="table">
+                <tbody>
+                <tr>
+
+                    <td>
+                        <span>请选择所在国家：</span>
+                        <select id="country" name="country" class="country">
+                            <option value="0" selected="selected">-- 请选择 --</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <span>请选择所在省：</span>
+                        <select id="province" name="province" >
+                            <option value="0" selected="selected">-- 请选择 --</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <span>请选择所在市：</span>
+                        <select id="city" name="city">
+                            <option value="0" selected="selected">-- 请选择 --</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <span>请选择所在县区：</span>
+                        <select id="distinction" name="distinction">
+                            <option  value="0" selected="selected">-- 请选择 --</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <div class="search_hotel">
+                            <input type="button" id="getCode" onclick="search()"   value="搜索">
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="search_hotel999">
+                <span >关键字搜索：</span>
+            </div>
+
+            <div class="search_hotel2">
+                <input  type="information" style="border-radius:9px" id="information" placeholder="请输入要搜索的酒店"/>
+                <button  onclick="searchname()">搜索</button>
+            </div>
+
+            <!--展示搜素结果-->
+            <div class="footer" id="test1">
+                <ul id="test" style="list-style:none;margin:0px; ">
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

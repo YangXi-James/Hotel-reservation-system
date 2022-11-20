@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单信息</title>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/js/book.js"></script>
+    <link href="/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--header starts-->
+<div class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="/images/logo.png"/></a> <!--修改图片 -->
+                <div class="clearfix"></div>
+            </div>
+            <span class="menu"> </span>
+            <div class="m-clear"></div>
+            <div class="top-menu">
+                <ul>
+                    <li><a href="toPage?url=/index">首页</a></li>
+                    <li class="active"><a href="toPage?url=/bookingDetail">订单信息</a></li>
+                    <li><a  href="contact.html">联系客服</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                <script>
+                    $("span.menu").click(function(){
+                        $(".top-menu ul").slideToggle(200);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="contact-bg2">
+    <div class="container">
+        <div class="booking">
+            <h3>订单信息</h3>
+            <div class="col-md-8 booking-form">
+                <form action="/bookingDetail">
+                    <h5>订单号</h5>
+                    <div>[[${orderId}]]</div>
+                    <h5>酒店信息</h5>
+                    <h4>酒店名：[[${hotelname}]]</h4>
+                    <h4>地址：[[${address}]]</h4>
+                    <h4>电话：[[${telephone}]]</h4>
+                    <h4>评分：[[${grade}]]</h4>
+                    <h4>星级：[[${level}]]</h4>
+                    <h4>房型：[[${standard_id}]]</h4>
+                    <h5>住客姓名</h5>
+                    <div>[[${name}]]</div>
+                    <h5>联系电话</h5>
+                    <div>[[${phone}]]</div>
+                    <h5>入住时间</h5>
+                    <div>[[${date}]]</div>
+                    <h5 class="mem">入住天数</h5>
+                    <div>[[${date_time}]]</div>
+                    <h5>备注</h5>
+                    <div>[[${remark}]]</div>
+                    <h5>共计</h5>
+                    <p id="totalPrice" style="color: #d2322d;font-size: large">[[${totalprice}]]元</p>
+                    <p style="margin-bottom: 25px"></p>
+                    <p id="paytext"></p>
+                    <p id="canceltext"></p>
+                    <p id="checkouttext"></p>
+
+                    <input name="input" id="pay" type="submit" value="支付">
+                    <input name="input" id="cancel" type="submit" value="取消订单">
+                    <input name="input" id="checkout" type="submit" value="申请退房">
+
+                    <h5>退款规则</h5>
+                    <h6>根据酒店政策，支付订单前可免费取消，支付订单后，如未入住，酒店将扣除全部房费，申请退房将扣除部分房费（包含手续费）。</h6>
+                    <h5>预订说明</h5>
+                    <h6>订单需等酒店或供应商确认后才生效，订单确认结果以个人订单管理信息为准；请在订单生效后再至酒店前台办理入住。</h6>
+                </form>
+
+            </div>
+
+            <div class="clearfix"> </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!---->
+<div class="fotter">
+    <div class="container">
+        <h3>143个城市位于世界各地的酒店</h3>
+        <h4>"热情好客，质量好，地理位置好，我们只为您提供最好的酒店"</h4>
+        <i class="man"></i>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    $(function () {
+        if ([[${pay}]]==0){
+            $("#paytext").text("未支付")
+            $("#checkout").hide()
+        }
+        if ([[${cancel}]]==1){
+            $("#canceltext").text("已取消")
+            $("#pay").hide()
+            $("#cancel").hide()
+            $("#checkout").hide()
+        }
+        if ([[${pay}]]==1) {
+            $("#paytext").text("已支付")
+            $("#pay").hide()
+            $("#cancel").hide()
+            $("#checkout").show()
+        }
+        if ([[${checkout}]]==1) {
+            $("#checkouttext").text("已退房")
+            $("#checkout").hide()
+        }
+    })
+
+</script>

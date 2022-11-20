@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>预订</title>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Pinyon+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+    <link href="/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--header starts-->
+<div class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="/images/logo.png"/></a> <!--修改图片 -->
+                <div class="clearfix"></div>
+            </div>
+            <span class="menu"> </span>
+            <div class="m-clear"></div>
+            <div class="top-menu">
+                <ul>
+                    <li><a href="toPage?url=/index">首页</a></li>
+                    <li class="active"><a href="toPage?url=/booking">预订</a></li>
+                    <li><a  href="contact.html">联系客服</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                <script>
+                    $("span.menu").click(function(){
+                        $(".top-menu ul").slideToggle(200);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="contact-bg2">
+    <div class="container">
+        <div class="booking">
+            <h3>预订</h3>
+            <div class="col-md-8 booking-form">
+                <form method="get" action="/booking">
+                    <h5>房型</h5>
+                    <input id="standard_id" name="standard_id" type="text" readonly="readonly">
+                    <h5>住客姓名</h5>
+                    <input name="name" type="text" value="请输入用户名"><!-- 通过session 获得用户名，放入model-->
+                    <input id="id" style="display: none" name="id" type="text" >
+                    <div style="color: #d2322d">[[${name_err}]]</div>
+                    <h5>联系电话</h5>
+                    <input name="phone" type="text" value="" onkeypress="return event.keyCode>=48&&event.keyCode<=57">
+                    <div style="color: #d2322d">[[${phone_err}]]</div>
+                    <h5>入住时间</h5>  <!-- 预设为今日 -->
+                    <input name="time" id="date_info" type="date">
+                    <div style="color: #d2322d">[[${date_err}]]</div>
+                    <h5 class="mem">入住天数</h5>
+                    <input min="1" type="number" id="quantity" name="dating_time" value=1 class="form-control input-small">
+                    <h5>备注</h5>
+                    <textarea name="remark"></textarea>
+                    <h4 style="color: #d2322d;margin-top: 50px;margin-bottom: 50px" id="Price1"></h4>
+                    <input name="price" id="price2" style="display: none">
+                    <input type="submit" value="预订">
+                    <input type="reset" value="重设">
+                    <h5>退款规则</h5>
+                    <h6>根据酒店政策，支付订单前可免费取消，支付订单后，如未入住，酒店将扣除全部房费，申请退房将扣除部分房费（包含手续费）。</h6>
+                    <h5>预订说明</h5>
+                    <h6>订单需等酒店或供应商确认后才生效，订单确认结果以个人订单管理信息为准；请在订单生效后再至酒店前台办理入住。</h6>
+                </form>
+            </div>
+
+            <div class="clearfix"> </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!---->
+<div class="fotter">
+    <div class="container">
+        <h3>143个城市位于世界各地的酒店</h3>
+        <h4>"热情好客，质量好，地理位置好，我们只为您提供最好的酒店"</h4>
+        <i class="man"></i>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        var time = new Date();
+        var day = ("0" + time.getDate()).slice(-2);
+        var month = ("0" + (time.getMonth() + 1)).slice(-2);
+        var today = time.getFullYear() + "-" + (month) + "-" + (day);
+        $('#date_info').val(today);
+    })
+
+    var price =[[${price}]];
+    document.getElementById("Price1").innerHTML = "每晚"+[[${price}]]+"元";
+    document.getElementById("price2").value = price;
+
+    var standard_id = [[${standard_id}]];
+    document.getElementById("standard_id").value = standard_id;
+
+    var user_id = [[${name}]];
+    document.getElementById("id").value = user_id;
+</script>

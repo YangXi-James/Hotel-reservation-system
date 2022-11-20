@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.OrderMapperLiu">
+    <resultMap type="com.example.springboot.common.domain.Order" id="DetialResultMap">
+        <id column="order_id" jdbcType="INTEGER" property="orderId" />
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="standard_id" jdbcType="INTEGER" property="standardId" />
+        <result column="time" jdbcType="DATE" property="time" />
+        <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+        <result column="dating_time" jdbcType="INTEGER" property="datingTime" />
+        <result column="wheather_pay" jdbcType="BIT" property="wheatherPay" />
+        <result column="order_time" jdbcType="TIME" property="orderTime" />
+        <association property="user" javaType="com.example.springboot.common.domain.User">
+            <id column="id" jdbcType="INTEGER" property="id" />
+            <result column="email" jdbcType="VARCHAR" property="email" />
+            <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+            <result column="password" jdbcType="VARCHAR" property="password" />
+            <result column="identity" jdbcType="VARCHAR" property="identity" />
+        </association>
+        <association property="standard" javaType="com.example.springboot.common.domain.Standard">
+            <id column="standard_id" jdbcType="INTEGER" property="standardId" />
+            <result column="area" jdbcType="REAL" property="area" />
+            <result column="room_id" jdbcType="INTEGER" property="roomId" />
+            <result column="storey" jdbcType="INTEGER" property="storey" />
+            <result column="weaher_hotwater" jdbcType="BIT" property="weaherHotwater" />
+            <result column="weather_wifi" jdbcType="BIT" property="weatherWifi" />
+            <result column="roomphoto_url" jdbcType="CHAR" property="roomphotoUrl" />
+            <result column="bed" jdbcType="CHAR" property="bed" />
+            <result column="room_number" jdbcType="INTEGER" property="roomNumber" />
+            <result column="weaher_cancel" jdbcType="BIT" property="weaherCancel" />
+            <result column="price" jdbcType="DECIMAL" property="price" />
+            <result column="breakfast" jdbcType="INTEGER" property="breakfast" />
+            <result column="equipment" jdbcType="CHAR" property="equipment" />
+            <result column="hotel_id" jdbcType="INTEGER" property="hotelId" />
+        </association>
+    </resultMap>
+
+
+    <select id="selectDetialById" parameterType="java.lang.Integer" resultMap="DetialResultMap">
+       select  *
+       from (theorder natural join user)natural join standard
+        where  order_id = #{orderId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultType="java.lang.Integer" >
+       select  count(*) from theorder;
+    </select>
+
+    <select id="selectLatestOrder" resultMap="BaseResultMap" >
+        select  *
+        from (theorder natural join user)natural join standard
+        Order By time DESC
+        Limit 5;
+    </select>
+
+</mapper>
