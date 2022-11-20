@@ -1,0 +1,70 @@
+.search_hotel{
+    padding: 25px;
+}
+.search_hotel input[type="button"],
+.search_hotel button{
+    /*width:1px;*/
+    hight:10px;
+    background-color: #1CB94E;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: normal;
+    /*padding: 14px 0;*/
+    /*border-radius: 10px;*/
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius:9px;
+    padding: 3px 20px 3px 20px;
+}
+.search_hotel input[type="button"]:hover,
+.search_hotel button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.search_hotel2{
+    width:100%;
+    margin-bottom: 10px;
+    text-align:center;
+}
+.search_hotel999{
+    text-align:center;
+}
+.search_hotel2 input[type="information"]{
+    width: calc(50%);
+    height:38px;
+    outline: none;
+    border: 1px solid #ddd;
+    padding: 0 10px ;
+    border-radius: 2px;
+    color: #333;
+    font-size:0.8rem;
+    -webkit-transition:all 0.1s linear;
+    -moz-transition:all 0.1s linear;
+    transition:all 0.1s linear;
+}
+
+.search_hotel2 input:focus{
+    border-color: #358efb;
+}
+
+.search_hotel2 button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.search_hotel2 button{
+    /*width:1px;*/
+    hight:10px;
+    background-color: #1CB94E;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: normal;
+    /*padding: 14px 0;*/
+    /*border-radius: 10px;*/
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius:9px;
+    padding: 3px 20px 3px 20px;
+    margin-left: 20px;
+}
