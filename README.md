@@ -1,4 +1,4 @@
-# Hotel-reservation-system
+# Hotel Reservation and Management System
 
 ![Project Version](https://img.shields.io/badge/version-2.0-blue.svg)
 
